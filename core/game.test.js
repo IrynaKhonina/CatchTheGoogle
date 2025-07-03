@@ -40,7 +40,11 @@ it('google should be in the Grid after start', async () => {
 it('google should be in the Grid but in position after jump', async () => {
     const numberUtil = new ShogunNumberUtility()
     const game = new Game(numberUtil)
-    game.googleJumpInterval = 1 //ms
+
+
+   expect(game.player1Position).toBeNull()
+
+
     await game.start() // jump - web API /browser 10
 
     for (let i = 0; i < 100; i++) {
@@ -52,5 +56,47 @@ it('google should be in the Grid but in position after jump', async () => {
 
 
 })
+// промисификация setTimeout
+
+it('player should move in correct directions', async () => {
+    const fakeNumberUtility = {
+        getRandomIntegerNumber(from, to) {
+            return 3; // Фиксированная стартовая позиция (3,3)
+        }
+    };
+
+    const game = new Game(fakeNumberUtility);
+    game.gridSize = {columnCount: 4, rowCount: 4};
+
+    // 1. Проверяем начальное состояние
+    expect(game.player1Position).toBeNull();
+
+    // 2. Запускаем игру (игрок должен появиться в (3,3))
+    await game.start();
+    expect(game.player1Position).toEqual({x: 3, y: 3});
+
+    // 3. Тестируем движения
+    game.movePlayer(1, "RIGHT");
+    expect(game.player1Position).toEqual({x: 3, y: 3}); // Не должен сдвинуться (уже у правой границы)
+
+    game.movePlayer(1, "DOWN");
+    expect(game.player1Position).toEqual({x: 3, y: 3}); // Не должен сдвинуться (уже у нижней границы)
+
+    game.movePlayer(1, "UP");
+    expect(game.player1Position).toEqual({x: 3, y: 2});
+
+    game.movePlayer(1, "UP");
+    expect(game.player1Position).toEqual({x: 3, y: 1});
+
+    game.movePlayer(1, "LEFT");
+    expect(game.player1Position).toEqual({x: 2, y: 1});
+
+    game.movePlayer(1, "UP");
+    expect(game.player1Position).toEqual({x: 2, y: 0});
+
+    // Дополнительная проверка движения вниз
+    game.movePlayer(1, "DOWN");
+    expect(game.player1Position).toEqual({x: 2, y: 1});
+});
 // промисификация setTimeout
 const delay = (ms) => new Promise(res => setTimeout(res, ms))
