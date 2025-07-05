@@ -59,9 +59,15 @@ it('google should be in the Grid but in position after jump', async () => {
 // промисификация setTimeout
 
 it('player should move in correct directions', async () => {
+
     const fakeNumberUtility = {
+        index:0,
+        values:[
+            3,3,
+            0,0
+        ],
         getRandomIntegerNumber(from, to) {
-            return 3; // Фиксированная стартовая позиция (3,3)
+            return this.values[this.index++];
         }
     };
 

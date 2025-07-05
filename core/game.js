@@ -1,4 +1,4 @@
-import {GameStatuses} from "./game-statuses";
+import {GameStatuses} from "./game-statuses.js";
 
 export class Game {
     #status = GameStatuses.SETTINGS
@@ -63,7 +63,11 @@ export class Game {
             x: this.#NumberUtility.getRandomIntegerNumber(0, this.#settings.gridSize.columnCount - 1),
             y: this.#NumberUtility.getRandomIntegerNumber(0, this.#settings.gridSize.rowCount - 1),
         }
-        if (newPosition.x === this.#googlePosition?.x && newPosition.y === this.#googlePosition.y) {
+        if (
+            newPosition.x === this.#googlePosition?.x && newPosition.y === this.#googlePosition.y
+            ||
+            newPosition.x === this.#player1Position?.x && newPosition.y === this.#player1Position.y
+        ) {
             this.#makeGoogleJump()
             return
         }
@@ -124,5 +128,12 @@ export class Game {
         this.#player1Position = newPosition;
     }
 
+}
 
+class GridSize {
+    constructor(rowCount = 4, columnCount = 4) {
+        if (rowCount * columnCount<4) throw new Error('Min cells count should be 4')
+            this.rowCount = rowCount;
+        this.columnCount = columnCount;
+    }
 }
