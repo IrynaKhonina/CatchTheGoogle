@@ -1,8 +1,37 @@
+//
+//
+// export const GameStatuses ={
+//     SETTINGS: 'SETTINGS',
+//     IN_PROGRESS: 'IN_PROGRESS',
+//     WIN: 'WIN',
+//     LOSE: 'LOSE',
+// }
 
+export const GAME_STATES = {
+    SETTINGS: "settings",
+    IN_PROGRESS: "in_progress",
+    WIN: "win",
+    LOSE: "lose",
+};
 
-export const GameStatuses ={
-    SETTINGS: 'SETTINGS',
-    IN_PROGRESS: 'IN_PROGRESS',
-    WIN: 'WIN',
-    LOSE: 'LOSE',
-}
+export const EVENTS = {
+    GOOGLE_JUMPED: "GOOGLE_JUMPED",
+    PLAYER1_MOVED: "PLAYER1_MOVED",
+    PLAYER2_MOVED: "PLAYER2_MOVED",
+    STATUS_CHANGED: "STATUS_CHANGED",
+    SCORES_CHANGED: "SCORES_CHANGED",
+    GOOGLE_CAUGHT: "GOOGLE_CAUGHT",
+    GOOGLE_RAN_AWAY: "GOOGLE_RAN_AWAY",
+    SETTINGS_CHANGED: "SETTINGS_CHANGED",
+};
+
+export const MOVING_DIRECTIONS = {
+    UP: "UP",
+    DOWN: "DOWN",
+    LEFT: "LEFT",
+    RIGHT: "RIGHT",
+};
+
+export const SERVER = {
+    BASE_URL: "/api",
+};

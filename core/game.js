@@ -12,12 +12,20 @@ export class Game {
     }
 
     #settings = {
-        gridSize: {
-            columnCount: 4,
-            rowCount: 4
-        },
+        gridSize: new GridSize(4,4),
         googleJumpInterval: 1000
     }
+
+    #observers = []
+
+    subscribe(observerFunction) {
+        this.#observers.push(observerFunction);
+    }
+
+    #notify() {
+        this.#observers.forEach(o => o());
+    }
+
 
     /**
      * Sets the Google jump interval (in milliseconds).
@@ -34,6 +42,7 @@ export class Game {
             throw new TypeError("Interval must be a numbers");
         }
         this.#settings.googleJumpInterval = newValue;
+        this.#notify()
     }
 
     start() {
@@ -45,8 +54,11 @@ export class Game {
         this.#placePlayer1ToGrid()
         this.#makeGoogleJump()
 
+        this.#notify()
+
         setInterval(() => {
             this.#makeGoogleJump()
+            this.#notify()
         }, this.#settings.googleJumpInterval);
 
     }
@@ -92,6 +104,7 @@ export class Game {
 
     set gridSize(value) {
         this.#settings.gridSize = value
+        this.#notify()
     }
 
     //todo:movedirection to Constsnts
@@ -126,14 +139,15 @@ export class Game {
 
         // Обновляем позицию
         this.#player1Position = newPosition;
+        this.#notify()
     }
 
 }
 
 class GridSize {
     constructor(rowCount = 4, columnCount = 4) {
-        if (rowCount * columnCount<4) throw new Error('Min cells count should be 4')
-            this.rowCount = rowCount;
+        if (rowCount * columnCount < 4) throw new Error('Min cells count should be 4  ')
+        this.rowCount = rowCount;
         this.columnCount = columnCount;
     }
 }

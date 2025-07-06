@@ -1,13 +1,12 @@
-import {Controller} from "./controller.js";
-import {View} from "./view.js";
-import {ShogunNumberUtility} from "../core/shogun-number-utility.js";
-import {Game} from "../core/game.js";
+import { AppComponent } from "./components/App.component.js";
 
+const rootElement = document.getElementById("root");
 
-const view=new View()
+function renderApp() {
+    rootElement.innerHTML = "";
 
-const numberUtil = new ShogunNumberUtility()
-const game = new Game(numberUtil)
+    const appComponent = AppComponent();
 
-const controller = new Controller(view, game);
-controller.init();
+    rootElement.append(appComponent.element);
+}
+renderApp();
